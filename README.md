@@ -101,8 +101,8 @@ $ sudo docker run -it --rm -p 5001:5001 document-similarity-api
 ```
 - approach 3, pull down and run via Docker Hub with the following command:
 ```sh
-$ docker pull alphamonkey9/document-similarity-api:ver.2
-$ docker run --rm -p 5001:5001 alphamonkey9/document-similarity-api:ver.2
+$ docker pull alphamonkey9/document-similarity-api:jaccard-index
+$ docker run --rm -p 5001:5001 alphamonkey9/document-similarity-api:jaccard-index
 ```
 or
 ```
