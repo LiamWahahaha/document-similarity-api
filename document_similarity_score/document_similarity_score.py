@@ -106,7 +106,10 @@ class ConcreteStrategyWordVector(Strategy):
         length_of_v1 = sum(map(lambda x: x ** 2, word_vector1))
         length_of_v2 = sum(map(lambda x: x ** 2, word_vector2))
 
-        return (inner_product ** 2 / (length_of_v1 * length_of_v2)) ** 0.5
+        try:
+            return (inner_product ** 2 / (length_of_v1 * length_of_v2)) ** 0.5
+        except ZeroDivisionError:
+            return 0
 
 
 class ConcreteStrartegyTFIDF(Strategy):
