@@ -2,7 +2,7 @@
 
 ## Table of Cotents
 - [Requirements](README.md#requirements)
-- [Directory tree structurer](README.md#directory-tree-structurer)
+- [Directory tree structurer](README.md#directory-tree-structure)
 - [Setup](README.md#setup)
 - [How to get the similarity score?](README.md#how-to-get-the-similarity-score)
   - [Use it as a Python library](README.md#use-it-as-a-python-library)
@@ -38,7 +38,7 @@
 ├── requirements.txt
 └── wsgi.py
 ```
-
+For the design document, please see 
 ## Setup
 - Install requirements
 ```sh
