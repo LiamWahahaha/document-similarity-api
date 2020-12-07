@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Dict, List, Set
 from string import punctuation
 
-from document_similarity_score.stop_words import stop_words
+from .stop_words import stop_words
 
 
 class TextProcessor:

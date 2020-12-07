@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-from document_similarity_score.utils import TextProcessor
+from .utils import TextProcessor
 
 
 class Context:
