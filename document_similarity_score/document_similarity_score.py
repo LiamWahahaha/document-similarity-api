@@ -27,7 +27,7 @@ class Strategy(ABC):
         pass
 
 
-class StrategyJaccardIndex(Strategy):
+class ConcreteStrategyJaccardIndex(Strategy):
     weighting = 0.98
 
     def calculate_similarity_score(
@@ -70,9 +70,44 @@ class StrategyJaccardIndex(Strategy):
         return jaccard_index
 
 
-class StrategyWordVector(Strategy):
-    pass
+class ConcreteStrategyWordVector(Strategy):
+    weighting = 0.98
+
+    def calculate_similarity_score(
+        self, text1: str, text2: str, remove_stop_words: bool = True
+    ) -> float:
+        if text1 == text2:
+            return 1.0
+
+        tp1 = TextProcessor(text1)
+        tp2 = TextProcessor(text2)
+
+        if tp1.normalized_text == tp2.normalized_text:
+            return 0.99
+
+        corpus_domain = TextProcessor.get_corpus_domain(
+            [tp1.token_counter, tp2.token_counter], remove_stop_words
+        )
+        word_vector1 = TextProcessor.get_word_vector(tp1.token_counter, corpus_domain)
+        word_vector2 = TextProcessor.get_word_vector(tp2.token_counter, corpus_domain)
+        return self.weighting * self.calculate_cosine_similarity(
+            word_vector1, word_vector2
+        )
+
+    def calculate_cosine_similarity(
+        self, word_vector1: List[int], word_vector2: List[int]
+    ) -> float:
+        inner_product = sum(
+            [
+                amplitude1 * amplitude2
+                for amplitude1, amplitude2 in zip(word_vector1, word_vector2)
+            ]
+        )
+        length_of_v1 = sum(map(lambda x: x ** 2, word_vector1))
+        length_of_v2 = sum(map(lambda x: x ** 2, word_vector2))
+
+        return (inner_product ** 2 / (length_of_v1 * length_of_v2)) ** 0.5
 
 
-class StrartegyTFIDF(Strategy):
+class ConcreteStrartegyTFIDF(Strategy):
     pass

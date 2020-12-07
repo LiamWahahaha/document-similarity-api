@@ -102,7 +102,10 @@ class TextProcessor:
     ) -> List[int]:
         word_vector = [0] * len(domain)
         for token, number in token_counter.items():
-            word_vector[domain[token]] = number
+            try:
+                word_vector[domain[token]] = number
+            except KeyError:
+                pass
 
         return word_vector
 

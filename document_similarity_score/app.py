@@ -4,7 +4,11 @@ from flask_api import status
 
 app = Flask(__name__)
 
-from .document_similarity_score import Context, StrategyJaccardIndex
+from .document_similarity_score import (
+    Context,
+    ConcreteStrategyJaccardIndex,
+    ConcreteStrategyWordVector,
+)
 
 
 @app.route("/")
@@ -18,7 +22,8 @@ def similarity_score():
     try:
         document1 = payload["document1"]
         document2 = payload["document2"]
-        context = Context(StrategyJaccardIndex())
+        # context = Context(ConcreteStrategyJaccardIndex())
+        context = Context(ConcreteStrategyWordVector())
         score = context.calculate_document_similarity_score(document1, document2)
         return jsonify({"similarity_score": score}), status.HTTP_200_OK
     except KeyError:
