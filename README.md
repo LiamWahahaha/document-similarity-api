@@ -2,7 +2,7 @@
 
 ## Table of Cotents
 - [Requirements](README.md#requirements)
-- [Directory tree structurer](README.md#directory-tree-structure)
+- [Directory tree structure](README.md#directory-tree-structure)
 - [Setup](README.md#setup)
 - [How to get the similarity score?](README.md#how-to-get-the-similarity-score)
   - [Use it as a Python library](README.md#use-it-as-a-python-library)
@@ -11,6 +11,7 @@
     - [Test via NodeJS](README.md#test-via-nodejs)
     - [Test via Python](README.md#test-via-python)
 - [Unit testing](README.md#unit-testing)
+- [Misc](README.md#misc)
 
 ## Requirements
 - python3+
@@ -53,11 +54,14 @@ $ pip3 install -r requirements.txt
 
 ## How to get the similarity score?
 ### Use it as a python library:
+- Currently, there are two strategy options for calculating the similarity score:
+  - ConcreteStrategyJaccardIndex
+  - ConcreteStrategyWordVector
 ```
 from document_similarity_score.document_similarity_score import Context
-from document_similarity_score.document_similarity_score import StrategyJaccardIndex
+from document_similarity_score.document_similarity_score import ConcreteStrategyJaccardIndex
 
-context = Context(StrategyJaccardIndex())
+context = Context(ConcreteStrategyJaccardIndex())
 
 document1 = "..."
 document2 = "..."
@@ -67,9 +71,9 @@ print(f"The similarity score of document1 and document2 is ${similarity_score}")
 - for example:
 ```
 from document_similarity_score.document_similarity_score import Context
-from document_similarity_score.document_similarity_score import StrategyJaccardIndex
+from document_similarity_score.document_similarity_score import ConcreteStrategyJaccardIndex
 
-context = Context(StrategyJaccardIndex())
+context = Context(ConcreteStrategyJaccardIndex())
 
 sample1 = """The easiest way to earn points with Fetch Rewards is to just shop for the products you
 already love. If you have any participating brands on your receipt, you'll get points based on the 
@@ -85,13 +89,24 @@ similarity_score = context.calculate_document_similarity_score(sample1, sample2)
 print(f"The similarity score of sample1 and sample2 is ${similarity_score}")
 ```
 
-## Via sending a POST request:
+### Via sending a POST request:
+- approach 1, run the Flask application with the following command:
 ```sh
 $ python3 wsgi.py
 ```
-Once the server is running, you can test the API via many way, such as:
+- approach 2, run the Docker image with the following command:
+```sh
+$ docker pull alphamonkey9/document-similarity-api:ver.2
+$ docker run --rm -p 5001:5001 alphamonkey9/document-similarity-api:ver.2
+```
+or
+```
+$ docker pull alphamonkey9/document-similarity-api:word-vector
+$ docker run --rm -p 5001:5001 alphamonkey9/document-similarity-api:word-vector
+```
+Once the server is running, you can test the API via many ways, such as:
 
-### Test via cURL
+#### Test via cURL
   
 ```
 curl --location --request POST 'http://127.0.0.1:5001/similarity-score' \
@@ -102,7 +117,7 @@ curl --location --request POST 'http://127.0.0.1:5001/similarity-score' \
 }'
 ```
 
-### Test via NodeJS
+#### Test via NodeJS
   
 ```
 var axios = require('axios');
@@ -126,7 +141,7 @@ axios(config)
 });
 ```
 
-### Test via Python
+#### Test via Python
 ```
 import http.client
 import mimetypes
@@ -165,3 +180,6 @@ Then you can run the tests as follows
 ```sh
 $ python3 -m unittest tests/* -v
 ```
+
+## Misc
+- It would be great to use a Python code formatter to help formatting such as [black](#https://github.com/psf/black)
