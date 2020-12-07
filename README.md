@@ -90,11 +90,16 @@ print(f"The similarity score of sample1 and sample2 is ${similarity_score}")
 ```
 
 ### Via sending a POST request:
-- approach 1, run the Flask application with the following command:
+- approach 1, run the Flask application directly with the following command:
 ```sh
 $ python3 wsgi.py
 ```
-- approach 2, run the Docker image with the following command:
+- approach 2, run a docker container locally at the root directory with the following command:
+```sh
+$ sudo docker build --tage document-similarity-api .
+$ sudo docker run -it --rm -p 5001:5001 document-similarity-api
+```
+- approach 3, pull down and run via Docker Hub with the following command:
 ```sh
 $ docker pull alphamonkey9/document-similarity-api:ver.2
 $ docker run --rm -p 5001:5001 alphamonkey9/document-similarity-api:ver.2
@@ -182,4 +187,4 @@ $ python3 -m unittest tests/* -v
 ```
 
 ## Misc
-- It would be great to use a Python code formatter to help formatting such as [black](#https://github.com/psf/black)
+- It would be great to use a Python code formatter to help formatting such as [black](https://github.com/psf/black)
