@@ -1,10 +1,17 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing import List
 
 from .utils import TextProcessor
 
 
 class Context:
+    """
+    The Context defines the interface of iterest to clients, accepts a concrete
+    Strategy through the constructor, and allows replacing a concrete Strategy object
+    at runtime.
+    """
+
     def __init__(self, strategy: Strategy) -> None:
         self.__strategy = strategy
 
@@ -23,11 +30,27 @@ class Context:
 
 class Strategy(ABC):
     @abstractmethod
-    def calculate_similarity_score(self, text1: str, text2: str) -> float:
+    def calculate_similarity_score(
+        self, text1: str, text2: str, remove_stop_words: bool = True
+    ) -> float:
         pass
 
 
 class ConcreteStrategyJaccardIndex(Strategy):
+    """
+    Calculate the similarity score based on the Jaccard index
+
+    The similarity score is 1.0, when the input texts are exactly the same.
+    The similarity score is 0.99, when the input texts are exactly the same after
+    removed the punctuations and lowercased.
+    In other case, the similarity score is (weighting) * (Jaccard index).
+
+    References
+    ----------
+    Jaccard index: https://en.wikipedia.org/wiki/Jaccard_index
+
+    """
+
     weighting = 0.98
 
     def calculate_similarity_score(
@@ -71,6 +94,15 @@ class ConcreteStrategyJaccardIndex(Strategy):
 
 
 class ConcreteStrategyWordVector(Strategy):
+    """
+    Calculate the similarity score based on the cosine similarity
+
+    The similarity score is 1.0, when the input texts are exactly the same.
+    The similarity score is 0.99, when the input texts are exactly the same after
+    removed the punctuations and lowercased.
+    In other case, the similarity score is (weighting) * (cosine similarity score).
+    """
+
     weighting = 0.98
 
     def calculate_similarity_score(

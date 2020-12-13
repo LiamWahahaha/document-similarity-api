@@ -1,3 +1,13 @@
+"""[summary]
+stop_words is a default set contains the common words in English. It can be replaced by
+the NLTK's list of English stopwords.
+
+References
+----------
+stop words: https://en.wikipedia.org/wiki/Stop_word
+
+"""
+
 stop_words = {
     "i",
     "me",

@@ -22,8 +22,12 @@ def similarity_score():
     try:
         document1 = payload["document1"]
         document2 = payload["document2"]
-        # context = Context(ConcreteStrategyJaccardIndex())
+        strategy = payload["strategy"]
         context = Context(ConcreteStrategyWordVector())
+
+        if strategy == 'JaccardIndex':
+            context.strategy = ConcreteStrategyJaccardIndex()
+
         score = context.calculate_document_similarity_score(document1, document2)
         return jsonify({"similarity_score": score}), status.HTTP_200_OK
     except KeyError:
