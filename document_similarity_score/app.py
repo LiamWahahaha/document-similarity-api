@@ -22,9 +22,9 @@ def similarity_score():
     try:
         document1 = payload["document1"]
         document2 = payload["document2"]
-        strategy = payload["strategy"] if "strategy" in payload else None
         context = Context(ConcreteStrategyWordVector())
 
+        strategy = payload.get("strategy", None)
         if strategy == "JaccardIndex":
             context.strategy = ConcreteStrategyJaccardIndex()
 
